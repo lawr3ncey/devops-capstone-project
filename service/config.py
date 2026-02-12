@@ -20,4 +20,9 @@ SQLALCHEMY_DATABASE_URI = DATABASE_URI
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 # Secret for session management
-SECRET_KEY = os.getenv("SECRET_KEY", "s3cr3t-key-shhhh")
+# Do not ship a hardcoded secret. Require an environment variable in real deployments.
+SECRET_KEY = os.getenv("SECRET_KEY")
+if not SECRET_KEY:
+    # Safe fallback for lab/dev only (non-secret). In production you should set SECRET_KEY.
+    SECRET_KEY = "dev-only-not-for-production"
+
